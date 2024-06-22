@@ -7,6 +7,7 @@ six
 dill
 requests
 py7zr
+flask
 
 # Misc.
 magic-wormhole
@@ -45,6 +46,7 @@ clu; platform_system!="Windows"
 flax
 neural-tangents
 adversarial-robustness-toolbox
+openai
 
 # Tensorflow. Check platform/version/Python support before updating pin.
 tensorflow==2.16.1
