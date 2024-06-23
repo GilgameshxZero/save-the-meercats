@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from openai import OpenAI
+import re
 
 OAI_MODEL_NAME = "gpt-3.5-turbo-16k"
 SYSTEM_RESPONSE_PROMPT = "You are a game master simulating the world of D.A.N. Context will be provided to you in the form of a prompt. You must respond to the player's actions and guide them through the story."
@@ -19,6 +20,7 @@ def message():
 		}],
 		"days_remaining": 100
 	}
+	sessions[session_id] = session
 	text = request.get_json()["text"]
 
 	session["history"].append({"role": "user", "content": text})
@@ -39,8 +41,8 @@ def message():
 	monitor_time = oai.chat.completions.create(
 		model=OAI_MODEL_NAME,
 		messages=[
-			{"role": "system", "content": "You are an excellent calendar management assistant. You are in charge of scheduling activities for your client. Each activity takes at minimum 1 day and at most 365 days. When given an activity, it is your job to determine how many days the activity will take."},
-			{"role": "user", "content": "Please determine how many days this will take: " + text}
+			{"role": "system", "content": "You are a calendar scheduler. The actions given to you will be actions a user will perform in a post-apocalyptic fantasy world. You know each action takes between 1 day and 365 days to complete. When given an action, it is your job to determine how many days the action will take. You can only answer a user's input with a single number"},
+			{"role": "user", "content": "Answer the following question with a single number from 1-365 inclusive: How long does it take to " + text}
 		]
 	)
 
@@ -58,9 +60,18 @@ This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']
 		]
 	)
 
+	pattern = r'-?\d+'
+	match = re.search(pattern, monitor_time.choices[0].message.content)
+	if match:
+		number = int(match.group())
+		session["days_remaining"] -= number
+	else:
+		print("ERROR with days monitor_time: ", monitor_time.choices[0].message.content)
+
 	return jsonify({
 		"days_elapsed": 5,
-		"test": monitor_time.choices[0].message.content,
+		"days_taken": monitor_time.choices[0].message.content,
 		"text": response.choices[0].message.content,
-		"monitor_failure": monitor_failure.choices[0].message.content
+		"days_remaining": session["days_remaining"],
+		"session_id": session_id
 	})

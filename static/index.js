@@ -23,13 +23,10 @@ startBtn.onclick = async function () {
 	document.querySelector(`.storyboard`).appendChild(userSegment);
 
 	// Fetch the user input from the text box.
-	const response = await fetch("/api/message", {
+	const response = await fetch("/api/message?session_id=test", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
-		},
-		params: {
-			sessionId: sessionId
 		},
 		body: JSON.stringify({ text: text })
 	});
