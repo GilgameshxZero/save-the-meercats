@@ -20,7 +20,9 @@ sessions = {}
 
 @app.route("/api/message", methods=['POST'])
 def message():
+	# Get the session ID unique to this game instance
 	session_id = request.args.get("session_id")
+	# If the session ID exists, set that as the current session. Otherwise, create a new one with the base plot as the session's history
 	session = sessions[session_id] if session_id in sessions else {
 		"history": [{
 			"role": "assistant",
@@ -31,21 +33,26 @@ def message():
 	sessions[session_id] = session
 	text = request.get_json()["text"]
 
+	# Add the text from the textbox on the webpage as content connected to the user to the session history
 	session["history"].append({"role": "user", "content": text})
 	history = [{
 		"role": "system",
 		"content": SYSTEM_RESPONSE_PROMPT
 	}]
+	# Add the session history to the list of history iterables
 	history.extend(session["history"])
+	# Create the model and feed it the history iterables as the messages
 	response = oai.chat.completions.create(
 		model=OAI_MODEL_NAME,
 		messages=history
 	)
+	# Add the AI's response to the user's input to the session history
 	session["history"].append({
 		"role": "assistant",
 		"content": response.choices[0].message.content
 	})
-	
+
+	# Add a model that monitors the time a user has/how long a user's actions take in days
 	monitor_time = oai.chat.completions.create(
 		model=OAI_MODEL_NAME,
 		messages=[
@@ -54,6 +61,17 @@ def message():
 		]
 	)
 
+	# Regex for extracting the first integer in the AI's text response
+	pattern = r'-?\d+'
+	match = re.search(pattern, monitor_time.choices[0].message.content)
+	if match:
+		number = int(match.group())
+		session["days_remaining"] -= number
+	else:
+		# If no extractable integer given by the AI, default to the action taking one day
+		session["days_remaining"] -= 1
+
+	# Add a model that checks whether or not a user has ran out of time and thus "failed" the game
 	monitor_failure = oai.chat.completions.create(
 		model=OAI_MODEL_NAME,
 		messages=[
@@ -68,13 +86,7 @@ This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']
 		]
 	)
 
-	pattern = r'-?\d+'
-	match = re.search(pattern, monitor_time.choices[0].message.content)
-	if match:
-		number = int(match.group())
-		session["days_remaining"] -= number
-	else:
-		print("ERROR with days monitor_time: ", monitor_time.choices[0].message.content)
+	# Add a model that represents one of three win pathways: decimation of D.A.N.
 	monitor_decimate = oai.chat.completions.create(
 		model=OAI_MODEL_NAME,
 		messages=[
@@ -91,12 +103,12 @@ This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']
 		]
 	)
 
+	# Return a response consisting of the session ID, the text response from the AI, the days the action took, the days remaining, if the user has failed, and if D.A.N. was destroyed
 	return jsonify({
-		"days_elapsed": 5,
-		"days_taken": monitor_time.choices[0].message.content,
-		"text": response.choices[0].message.content,
-		"days_remaining": session["days_remaining"],
 		"session_id": session_id,
+		"text": response.choices[0].message.content,
+		"days_taken": monitor_time.choices[0].message.content,
+		"days_remaining": session["days_remaining"],
 		"monitor_failure": monitor_failure.choices[0].message.content,
 		"monitor_decimate": monitor_decimate.choices[0].message.content,
 	})
