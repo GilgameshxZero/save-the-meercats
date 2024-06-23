@@ -33,4 +33,8 @@ startBtn.onclick = async function () {
 	// Parse the JSON response
 	const result = await response.json();
 	console.log("Success:", result);
+
+	const newSegment = document.createElement("p");
+	newSegment.innerText = result.text;
+	document.querySelector(`.storyboard`).appendChild(newSegment);
 };
