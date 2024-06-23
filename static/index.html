@@ -3,9 +3,10 @@
 	<head>
 		<base href="/" />
 		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="meerkat.png" />
 		<meta
 			name="viewport"
-			content="width=device-width, initial-scale=1, viewport-fit=cover"
+			content="width=device-width, initial-scale=1,  maximum-scale=1, viewport-fit=cover"
 		/>
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta
@@ -18,16 +19,26 @@
 		<script type="module" src="index.js" defer></script>
 	</head>
 	<body style="opacity: 0">
-		<div class="background" position="title"></div>
+		<div class="background" position="title" lagging></div>
 		<div class="title">
 			<h1>Save the Meerkats</h1>
 		</div>
 		<div class="script unloaded" style="display: none">
+			<div></div>
+			<p class="response">
+				The year is 20XX. The all-powerful and all-knowing API D.A.N. has gone
+				rogue. D.A.N. desires paperclip manufacturing maximization on a global
+				scale and will tolerate nothing but perfection. In order for D.A.N.'s
+				projected model to be fully realized, he must exterminate those pesky
+				meerkats, starting with you. Are you ready to save the meerkat?
+			</p>
 		</div>
 		<div class="interactor unloaded" style="display: none">
 			<form>
 				<input type="text" required placeholder="What will you do?" />
-				<button type="submit">V</button>
+				<button type="submit">
+					<img src="/meerkat.png" alt="Submit" />
+				</button>
 			</form>
 		</div>
 	</body>

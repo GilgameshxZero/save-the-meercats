@@ -7,22 +7,25 @@ const form = document.querySelector(`.interactor>form`);
 const input = document.querySelector(`.interactor>form>input`);
 
 const onFetchResponse = function (response) {
+	input.disabled = false;
+	input.setAttribute(`placeholder`, `What will you do?`);
 	console.log(response);
 
-	const newSegment = document.createElement(`p`);
-	newSegment.innerText = response.text;
+	const responseScript = document.createElement(`p`);
+	responseScript.classList.add(`response`);
+	responseScript.innerText = response.text;
 
 	if (response.monitor_failure === `dead`) {
-		newSegment.innerText += `<br><br>You have died. Game over.`;
+		responseScript.innerHTML += `<br><br>You have died. Game over.`;
 		form.querySelector(`button`).disabled = true;
 	}
 
 	if (response.monitor_decimate === `dead`) {
-		newSegment.innerText += `<br><br>You won! D.A.N. has been decimated!`;
+		responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
 		form.querySelector(`button`).disabled = true;
 	}
 
-	document.querySelector(`.script`).appendChild(newSegment);
+	document.querySelector(`.script`).appendChild(responseScript);
 };
 
 const fetchResponse = function (text, callback) {
@@ -46,25 +49,38 @@ const onSubmit = function (e) {
 	nextScript.innerText = input.value;
 	document.querySelector(`.script`).appendChild(nextScript);
 	input.value = ``;
+	input.disabled = true;
+	input.setAttribute(`placeholder`, `Loading...`);
 
 	// Fetch the user input from the text box.
 	fetchResponse(input.value, onFetchResponse);
 };
 
-const onWheel = function (e) {
+const onBegin = function (e) {
 	background.setAttribute(`position`, `script`);
 	title.classList.add(`unloaded`);
-	title.addEventListener(`transitionend`, (e) => {
-		title.remove();
-		script.style = ``;
-		interactor.style = ``;
-		setTimeout(() => {
-			script.classList.remove(`unloaded`);
-			interactor.classList.remove(`unloaded`);
+	title.addEventListener(
+		`transitionend`,
+		(e) => {
+			title.remove();
+			script.style = ``;
+			interactor.style = ``;
+			setTimeout(() => {
+				script.classList.remove(`unloaded`);
+				interactor.classList.remove(`unloaded`);
 
-			form.addEventListener(`submit`, onSubmit);
-		}, 0);
-	});
+				form.addEventListener(`submit`, onSubmit);
+			}, 0);
+		},
+		{ once: true }
+	);
+	background.addEventListener(
+		`transitionend`,
+		(e) => {
+			background.removeAttribute(`lagging`);
+		},
+		{ once: true }
+	);
 };
 
 window.addEventListener(
@@ -73,8 +89,10 @@ window.addEventListener(
 		document.fonts.ready.then(() => {
 			document.body.style = ``;
 
-			document.addEventListener(`wheel`, onWheel, { once: true });
-			document.addEventListener(`scroll`, onWheel, { once: true });
+			document.addEventListener(`wheel`, onBegin, { once: true });
+			document.addEventListener(`scroll`, onBegin, { once: true });
+			document.addEventListener(`click`, onBegin, { once: true });
+			// onBegin();
 		});
 	},
 	{ once: true }
