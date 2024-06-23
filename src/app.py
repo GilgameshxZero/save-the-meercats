@@ -9,7 +9,7 @@ sessions = {}
 @app.route("/api/message", methods=['POST'])
 def message():
 	session_id = request.args.get("session_id")
-	history = sessions[session_id] if session_id in sessions else [{"role": "assistant", "content"}]
+	history = sessions[session_id] if session_id in sessions else [{"role": "assistant", "content": "Hello! How can I help you today?"}]
 	text = request.get_json()["text"]
 
 	model_response = oai.chat.completions.create(
@@ -27,8 +27,6 @@ def message():
 			{"role": "user", "content": "Please det" + text}
 		]
 	)
-
-	
 
 	return jsonify({
 		"days_elapsed": 5,
