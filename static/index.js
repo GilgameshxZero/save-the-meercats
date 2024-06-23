@@ -40,5 +40,11 @@ startBtn.onclick = async function () {
 
 	const newSegment = document.createElement("p");
 	newSegment.innerText = result.text;
+
+	if (result.monitor_failure === "dead") {
+		newSegment.innerText = "You have died. Game over.";
+		startBtn.firstChild.disabled = true;
+	}
+
 	document.querySelector(`.storyboard`).appendChild(newSegment);
 };
