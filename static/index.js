@@ -15,19 +15,23 @@ const onFetchResponse = function (response) {
 	responseScript.classList.add(`response`);
 	responseScript.innerText = response.text;
 
-	if (response.monitor_failure === `dead`) {
+	if (response.days_remaining <= 0) {
+		responseScript.innerHTML += `<br><br>You were too slow and took over 100 days! D.A.N. sent the nukes and destroyed the world! Game over.`;
+		input.disabled = true;
+	} else if (response.monitor_failure === `dead`) {
 		responseScript.innerHTML += `<br><br>You have died. Game over.`;
-		form.querySelector(`button`).disabled = true;
-	} else if (response.monitor_decimate === `dead`) {
-		responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
-		form.querySelector(`button`).disabled = true;
-	} else if (response.monitor_diplomacy === `dead`) {
-		responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
-		form.querySelector(`button`).disabled = true;
-	} else if (response.monitor_dethronement === `dead`) {
-		responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
-		form.querySelector(`button`).disabled = true;
+		input.disabled = true;
 	}
+	// } else if (response.monitor_decimate === `alive`) {
+	// 	responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
+	// 	input.disabled = true;
+	// } else if (response.monitor_diplomacy === `dead`) {
+	// 	responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
+	// 	input.disabled = true;
+	// } else if (response.monitor_dethronement === `dead`) {
+	// 	responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
+	// 	input.disabled = true;
+	// }
 
 	document.querySelector(`.script`).appendChild(responseScript);
 };
@@ -52,12 +56,13 @@ const onSubmit = function (e) {
 	const nextScript = document.createElement(`p`);
 	nextScript.innerText = input.value;
 	document.querySelector(`.script`).appendChild(nextScript);
-	input.value = ``;
 	input.disabled = true;
 	input.setAttribute(`placeholder`, `Loading...`);
 
 	// Fetch the user input from the text box.
 	fetchResponse(input.value, onFetchResponse);
+	
+	input.value = ``;
 };
 
 const onBegin = function (e) {
