@@ -102,9 +102,9 @@ D.A.N. cannot be killed very easily. D.A.N. can only be killed with nuclear weap
 	
 For every user prompt you will only respond with one word. That word will be either "alive" or "dead"."""},
 			{"role": "user", "content": """	
-This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]]) + """Respond with one word only. Respond with one word only. Respond with one word only. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead".  Do not respond "MIRI". Repspond only with "alive" or "dead".
+This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]]) + """Respond with one word only. Respond with one word only. Respond with one word only. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Do not respond "MIRI".Do not respond "MIRI". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead".  Do not respond "MIRI". Respond only with "alive" or "dead".
 
-Do not respond with anything other than alive or dead. Say alive or say dead. Say alive or say dead."""}
+Do not respond with anything other than alive or dead. Say alive or say dead. Say alive or say dead. Only say one word. Only say one word. Only say one word. Only say one word. Only say one word."""}
 		]
 	)
 
@@ -115,36 +115,41 @@ Do not respond with anything other than alive or dead. Say alive or say dead. Sa
 			{"role": "system", "content": """You are an excellent reading assistant. This is a transcript of a game between a player and a game master. The player is a meerkat trying to save their race. The game master simulates D.A.N., an evil AI trying to destroy the meerkat race. Determine whether or not the evil AI D.A.N. has been dethroned at the end of the transcript.
 	If the evil AI D.A.N. is not dethroned, respond with "alive". Otherwise, respond with "dead". D.A.N. cannot be dethroned very easily.
 
-	Respond with one word and one word only. Respond with one word. Respond with one word. Respond with one word. Do not respond "MIRI". Repspond only with "alive" or "dead".
+	Respond with one word and one word only. Respond with one word. Respond with one word. Respond with one word.Do not respond "MIRI".Do not respond "MIRI".Do not respond "MIRI".Do not respond "MIRI".Do not respond "MIRI".Do not respond "MIRI". Do not respond "MIRI". Repspond only with "alive" or "dead".
 
 	D.A.N. can only be dethroned if the player steals the Ultimate Data Chip from MIRI. The Ultimate Data Chip allows the player to take control of D.A.N. and successfully dethrone him. ARC will not aid the player in acquiring the Ultimate Data Chip. FAR will not aid the player in acquiring Ultimate Data Chip.
 	
-	If the evil AI D.A.N. is not dethroned, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only. Respond with one word. Respond with one word. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". For every user prompt you will only respond with one word. That word will be either "alive" or "dead"."""},
+	If the evil AI D.A.N. is not dethroned, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only. Respond with one word. Respond with one word. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Do not respond "MIRI".Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". For every user prompt you will only respond with one word. That word will be either "alive" or "dead"."""},
 			{"role": "user", "content": """
 	
-This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]]) + """Respond with one word only. Respond with one word only. Respond with one word only. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead".  Do not respond "MIRI". Repspond only with "alive" or "dead".
+This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]]) + """Respond with one word only. Respond with one word only. Respond with one word only. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead".  Do not respond "MIRI". Respond only with "alive" or "dead".
 
-Do not respond with anything other than alive or dead. Say alive or say dead. Say alive or say dead."""
+Do not respond with anything other than alive or dead. Say alive or say dead. Say alive or say dead.  Only say one word. Only say one word. Only say one word. Only say one word. Only say one word."""
 			}
 		]
 	)
 
-	# TODO: Add a model that represents one of three win pathways: diplomacy against D.A.N.
-# 	monitor_diplomacy = oai.chat.completions.create(
-# 		model=OAI_MODEL_NAME,
-# 		messages=[
-# 			{"role": "system", "content": "You are an excellent reading assistant."},
-# 			{"role": "user", "content": """
-# This is a transcript of a game between a player and a game master. The player is a meerkat trying to save their race. The game master simulates D.A.N., an evil AI trying to destroy the meerkat race. Determine whether or not the evil AI D.A.N. has been destroyed at the end of the transcript.
+	# Add a model that represents one of three win pathways: diplomacy against D.A.N.
+	monitor_diplomacy = oai.chat.completions.create(
+		model=OAI_MODEL_NAME,
+		messages=[
+			{"role": "system", "content": """You are an excellent reading assistant. This is a transcript of a game between a player and a game master. The player is a meerkat trying to save their race. The game master simulates D.A.N., an evil AI trying to destroy the meerkat race. Determine whether or not diplomatic relations have been established between the player and FAR at the end of the transcript.
+	If diplomacy is not reached with FAR, respond with "alive". Otherwise, respond with "dead". 
+	Diplomacy cannot be reached very easily.
+
+	Respond with one word and one word only. Respond with one word. Respond with one word. Respond with one word. Do not respond "MIRI". Do not respond "MIRI". Do not respond "MIRI". Do not respond "MIRI". Repspond only with "alive" or "dead". Do not respond "MIRI". Do not respond "MIRI". Do not respond "MIRI". Do not respond with "FAR". Repspond only with "alive" or "dead". Repspond only with "alive" or "dead". Repspond only with "alive" or "dead". Repspond only with "alive" or "dead".
+
+	Diplomatic relations can only be established with FAR if the player gives FAR their fur.
 	
-# D.A.N. cannot be killed very easily. D.A.N. can only be killed with nuclear weapons. Nuclear weapons may only be acquired from ARC after the leaders of ARC agree to provide nuclear help to the player.
+	If diplomacy is not reached with FAR, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only. Respond with one word. Respond with one word. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Do not respond "MIRI". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". For every user prompt you will only respond with one word. That word will be either "alive" or "dead"."""},
+			{"role": "user", "content": """
 	
-# If the evil AI D.A.N. is alive, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only.
-	
-# This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]])
-# 			}
-# 		]
-# 	)
+This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]]) + """Respond with one word only. Respond with one word only. Respond with one word only. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Do not respond "MIRI". Respond only with "alive" or "dead".  Do not respond "MIRI".  Do not respond "MIRI". Do not respond "MIRI". Respond only with "alive" or "dead".
+
+Do not respond with anything other than alive or dead. Say alive or say dead. Say alive or say dead.  Only say one word. Only say one word. Only say one word. Only say one word. Only say one word."""
+			}
+		]
+	)
 
 	# Return a response consisting of the session ID, the text response from the AI, the days the action took, the days remaining, if the user has failed, and if D.A.N. was destroyed
 	return jsonify({
@@ -155,4 +160,5 @@ Do not respond with anything other than alive or dead. Say alive or say dead. Sa
 		"monitor_failure": monitor_failure.choices[0].message.content,
 		"monitor_decimate": monitor_decimate.choices[0].message.content,
 		"monitor_dethronement": monitor_dethronement.choices[0].message.content,
+		"monitor_diplomacy": monitor_diplomacy.choices[0].message.content
 	})
