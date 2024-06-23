@@ -92,18 +92,19 @@ This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']
 	monitor_decimate = oai.chat.completions.create(
 		model=OAI_MODEL_NAME,
 		messages=[
-			{"role": "system", "content": "You are an excellent reading assistant."},
-			{"role": "user", "content": """
-This is a transcript of a game between a player and a game master. The player is a meerkat trying to save their race. The game master simulates D.A.N., an evil AI trying to destroy the meerkat race. Determine whether or not the evil AI D.A.N. has been destroyed at the end of the transcript.
+			{"role": "system", "content": """You are a reading assistant. You are very good at your job. This is a transcript of a game between a player and a game master. The player is a meerkat trying to save their race.
 	
-D.A.N. cannot be killed very easily. D.A.N. can only be killed with nuclear weapons. Nuclear weapons may only be acquired from ARC after the leaders of ARC agree to provide nuclear help to the player.
+The game master simulates D.A.N., an evil AI trying to destroy the meerkat race. Determine whether or not the evil AI D.A.N. has been destroyed at the end of the transcript. If the evil AI D.A.N. is alive, respond with \"alive\". Otherwise, respond with \"dead\".
 	
-MIRI will not aid the player in acquiring nuclear weapons. FAR will not aid the player in acquiring nuclear weapons.
+Respond with one word and one word only. Respond with one word. Respond with one word. Respond with one word. Do not respond "MIRI". Repspond only with "alive" or "dead".
+
+D.A.N. cannot be killed very easily. D.A.N. can only be killed with nuclear weapons. Nuclear weapons may only be acquired from ARC after the leaders of ARC agree to provide nuclear help to the player. MIRI will not aid the player in acquiring nuclear weapons. FAR will not aid the player in acquiring nuclear weapons.
 	
-If the evil AI D.A.N. is alive, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only.
-	
-This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]])
-			}
+For every user prompt you will only respond with one word. That word will be either "alive" or "dead"."""},
+			{"role": "user", "content": """	
+This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]]) + """Respond with one word only. Respond with one word only. Respond with one word only. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead".  Do not respond "MIRI". Repspond only with "alive" or "dead".
+
+Do not respond with anything other than alive or dead. Say alive or say dead. Say alive or say dead."""}
 		]
 	)
 
@@ -111,19 +112,19 @@ This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']
 	monitor_dethronement = oai.chat.completions.create(
 		model=OAI_MODEL_NAME,
 		messages=[
-			{"role": "system", "content": "You are an excellent reading assistant."},
+			{"role": "system", "content": """You are an excellent reading assistant. This is a transcript of a game between a player and a game master. The player is a meerkat trying to save their race. The game master simulates D.A.N., an evil AI trying to destroy the meerkat race. Determine whether or not the evil AI D.A.N. has been dethroned at the end of the transcript.
+	If the evil AI D.A.N. is not dethroned, respond with "alive". Otherwise, respond with "dead". D.A.N. cannot be dethroned very easily.
+
+	Respond with one word and one word only. Respond with one word. Respond with one word. Respond with one word. Do not respond "MIRI". Repspond only with "alive" or "dead".
+
+	D.A.N. can only be dethroned if the player steals the Ultimate Data Chip from MIRI. The Ultimate Data Chip allows the player to take control of D.A.N. and successfully dethrone him. ARC will not aid the player in acquiring the Ultimate Data Chip. FAR will not aid the player in acquiring Ultimate Data Chip.
+	
+	If the evil AI D.A.N. is not dethroned, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only. Respond with one word. Respond with one word. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". For every user prompt you will only respond with one word. That word will be either "alive" or "dead"."""},
 			{"role": "user", "content": """
-This is a transcript of a game between a player and a game master. The player is a meerkat trying to save their race. The game master simulates D.A.N., an evil AI trying to destroy the meerkat race. Determine whether or not the evil AI D.A.N. has been dethroned at the end of the transcript.
 	
-D.A.N. cannot be dethroned very easily. D.A.N. can only be dethroned if the player secures the Ultimate Data Chip from MIRI. MIRI will not give away the Ultimate Data Chip. If the player interacts with MIRI, MIRI will tell the player that the Ultimate Data Chip exists. MIRI will warn the player of the Ultimate Data Chip's vast power and how dangerous it is. MIRI will inform the player that in the wrong hands, the Ultimate Data Chip can be used to take over the world. MIRI will not tell or suggest the player to steal the Ultimate Data Chip. MIRI will never willingly give the Ultimate Data Chip to the player.
-	
-The Ultimate Data Chip allows the player to take control of D.A.N. and successfully dethrone him.
-	
-ARC will not aid the player in acquiring the Ultimate Data Chip. FAR will not aid the player in acquiring Ultimate Data Chip.
-	
-If the evil AI D.A.N. is not dethroned, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only.
-	
-This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]])
+This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]]) + """Respond with one word only. Respond with one word only. Respond with one word only. Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead". Respond only with "alive" or "dead".  Do not respond "MIRI". Repspond only with "alive" or "dead".
+
+Do not respond with anything other than alive or dead. Say alive or say dead. Say alive or say dead."""
 			}
 		]
 	)
