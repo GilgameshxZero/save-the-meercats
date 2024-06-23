@@ -40,12 +40,17 @@ startBtn.onclick = async function () {
 	newSegment.innerText = result.text;
 
 	if (result.monitor_failure === "dead") {
-		newSegment.innerText += "<br><br>You have died. Game over.";
+		newSegment.innerText += "</br>You have died. Game over.<br>";
 		startBtn.firstChild.disabled = true;
 	}
 
 	if (result.monitor_decimate === "dead") {
-		newSegment.innerText += "<br><br>You won! D.A.N. has been decimated!";
+		newSegment.innerText += "</br>You won! D.A.N. has been decimated!<br>";
+		startBtn.firstChild.disabled = true;
+	}
+
+	if (result.monitor_dethronement === "dead") {
+		newSegment.innerText += "</br>You won! D.A.N. has been dethroned!<br>";
 		startBtn.firstChild.disabled = true;
 	}
 
