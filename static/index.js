@@ -75,7 +75,6 @@ window.addEventListener(
 
 			document.addEventListener(`wheel`, onWheel, { once: true });
 			document.addEventListener(`scroll`, onWheel, { once: true });
-			onWheel();
 		});
 	},
 	{ once: true }
