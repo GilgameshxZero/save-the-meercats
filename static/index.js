@@ -18,9 +18,13 @@ const onFetchResponse = function (response) {
 	if (response.monitor_failure === `dead`) {
 		responseScript.innerHTML += `<br><br>You have died. Game over.`;
 		form.querySelector(`button`).disabled = true;
-	}
-
-	if (response.monitor_decimate === `dead`) {
+	} else if (response.monitor_decimate === `dead`) {
+		responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
+		form.querySelector(`button`).disabled = true;
+	} else if (response.monitor_diplomacy === `dead`) {
+		responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
+		form.querySelector(`button`).disabled = true;
+	} else if (response.monitor_dethronement === `dead`) {
 		responseScript.innerHTML += `<br><br>You won! D.A.N. has been decimated!`;
 		form.querySelector(`button`).disabled = true;
 	}
