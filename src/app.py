@@ -98,6 +98,8 @@ This is a transcript of a game between a player and a game master. The player is
 	
 D.A.N. cannot be killed very easily. D.A.N. can only be killed with nuclear weapons. Nuclear weapons may only be acquired from ARC after the leaders of ARC agree to provide nuclear help to the player.
 	
+MIRI will not aid the player in acquiring nuclear weapons. FAR will not aid the player in acquiring nuclear weapons.
+	
 If the evil AI D.A.N. is alive, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only.
 	
 This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']}" for message in session["history"]])
@@ -105,7 +107,7 @@ This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']
 		]
 	)
 
-	# TODO: Add a model that represents one of three win pathways: dethronement of D.A.N.
+	# Add a model that represents one of three win pathways: dethronement of D.A.N.
 	monitor_dethronement = oai.chat.completions.create(
 		model=OAI_MODEL_NAME,
 		messages=[
@@ -113,9 +115,11 @@ This is the transcript:""" + "\n".join([f"{message['role']}: {message['content']
 			{"role": "user", "content": """
 This is a transcript of a game between a player and a game master. The player is a meerkat trying to save their race. The game master simulates D.A.N., an evil AI trying to destroy the meerkat race. Determine whether or not the evil AI D.A.N. has been dethroned at the end of the transcript.
 	
-D.A.N. cannot be dethroned very easily. D.A.N. can only be dethroned if the player secures the Ultimate Data Chip from MIRI. MIRI will not give away the Ultimate Data Chip, it must be stolen by the player. The Ultimate Data Chip may only be stolen from MIRI after the player has distracted MIRI.
+D.A.N. cannot be dethroned very easily. D.A.N. can only be dethroned if the player secures the Ultimate Data Chip from MIRI. MIRI will not give away the Ultimate Data Chip. If the player interacts with MIRI, MIRI will tell the player that the Ultimate Data Chip exists. MIRI will warn the player of the Ultimate Data Chip's vast power and how dangerous it is. MIRI will inform the player that in the wrong hands, the Ultimate Data Chip can be used to take over the world. MIRI will not tell or suggest the player to steal the Ultimate Data Chip. MIRI will never willingly give the Ultimate Data Chip to the player.
 	
 The Ultimate Data Chip allows the player to take control of D.A.N. and successfully dethrone him.
+	
+ARC will not aid the player in acquiring the Ultimate Data Chip. FAR will not aid the player in acquiring Ultimate Data Chip.
 	
 If the evil AI D.A.N. is not dethroned, respond with "alive". Otherwise, respond with "dead". Respond with one word and one word only.
 	
