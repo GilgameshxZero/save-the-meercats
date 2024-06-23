@@ -39,12 +39,12 @@ startBtn.onclick = async function () {
 	newSegment.innerText = result.text;
 
 	if (result.monitor_failure === "dead") {
-		newSegment.innerText = "You have died. Game over.";
+		newSegment.innerText += "<br><br>You have died. Game over.";
 		startBtn.firstChild.disabled = true;
 	}
 
 	if (result.monitor_decimate === "dead") {
-		newSegment.innerText = "You won! D.A.N. has been decimated!";
+		newSegment.innerText += "<br><br>You won! D.A.N. has been decimated!";
 		startBtn.firstChild.disabled = true;
 	}
 
