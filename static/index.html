@@ -1,16 +1,34 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Save The Meerkat</title>
+		<base href="/" />
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, viewport-fit=cover"
+		/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta
+			name="apple-mobile-web-app-status-bar-style"
+			content="black-translucent"
+		/>
+
+		<title>Save the Meerkats</title>
 		<link rel="stylesheet" href="index.css" />
+		<script type="module" src="index.js" defer></script>
 	</head>
-	<body class="row background">
-		<h1 class="title">Save the Meerkat!</h1>
-		<div class="storyboard" style="display: flex">
-			<p id="story"></p>
+	<body style="opacity: 0">
+		<div class="background" position="title"></div>
+		<div class="title">
+			<h1>Save the Meerkats</h1>
 		</div>
-		<div id="buttonHub" style="display: flex; padding-top: 15px"></div>
-		<input type="text" id="userInput" />
-		<script src="index.js"></script>
+		<div class="script unloaded" style="display: none">
+		</div>
+		<div class="interactor unloaded" style="display: none">
+			<form>
+				<input type="text" required placeholder="What will you do?" />
+				<button type="submit">V</button>
+			</form>
+		</div>
 	</body>
 </html>
