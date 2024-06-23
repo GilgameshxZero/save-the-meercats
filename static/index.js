@@ -43,5 +43,10 @@ startBtn.onclick = async function () {
 		startBtn.firstChild.disabled = true;
 	}
 
+	if (result.monitor_decimate === "dead") {
+		newSegment.innerText = "You won! D.A.N. has been decimated!";
+		startBtn.firstChild.disabled = true;
+	}
+
 	document.querySelector(`.storyboard`).appendChild(newSegment);
 };
