@@ -16,7 +16,11 @@ startBtn.innerHTML = makeButton("SAVE HIM!");
 //- Wiring
 startBtn.onclick = async function () {
 	const inputNode = document.getElementById("userInput");
-	const text = inputNode.textContent;
+	const text = inputNode.value;
+
+	const userSegment = document.createElement("p");
+	userSegment.innerText = text;
+	document.querySelector(`.storyboard`).appendChild(userSegment);
 
 	// Fetch the user input from the text box.
 	const response = await fetch("/api/message", {

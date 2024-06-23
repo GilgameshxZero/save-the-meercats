@@ -18,19 +18,21 @@ def message():
 	}
 	text = request.get_json()["text"]
 
+	session["history"].append({"role": "user", "content": text})
 	history = [{
 		"role": "system",
 		"content": "You are a game master simulating the world of D.A.N. Context will be provided to you in the form of a prompt. You must respond to the player's actions and guide them through the story."
 	}]
 	history.extend(session["history"])
-	history.append({
-		"role": "system",
-		"content": text
-	})
 	response = oai.chat.completions.create(
 		model="gpt-3.5-turbo-16k",
 		messages=history
 	)
+	session["history"].append({
+		"role": "assistant",
+		"content": response.choices[0].message.content
+	})
+	print(session)
 	
 	monitor_time = oai.chat.completions.create(
 		model="gpt-3.5-turbo-16k",
@@ -42,6 +44,6 @@ def message():
 
 	return jsonify({
 		"days_elapsed": 5,
-		"text": str(response.choices[0].message.content),
-		"test": monitor_time.choices[0].message.content
+		"test": monitor_time.choices[0].message.content,
+		"text": response.choices[0].message.content
 	})
